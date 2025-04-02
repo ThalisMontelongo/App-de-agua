@@ -1,8 +1,8 @@
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ArrowRight, ArrowLeft } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import gsap from 'gsap';
 
 const projects = [
   {
@@ -51,6 +51,8 @@ const projects = [
 
 const Portfolio = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
   const itemsPerPage = 3;
   const totalPages = Math.ceil(projects.length / itemsPerPage);
   
@@ -67,50 +69,86 @@ const Portfolio = () => {
     activeIndex * itemsPerPage + itemsPerPage
   );
   
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.portfolio-title', {
+        opacity: 0, 
+        y: 30,
+        duration: 0.8,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 80%'
+        }
+      });
+      
+      // Animação para cartões de projeto
+      const animateCards = () => {
+        gsap.fromTo('.portfolio-card', 
+          { opacity: 0, y: 50 },
+          { 
+            opacity: 1, 
+            y: 0,
+            stagger: 0.1,
+            duration: 0.6,
+          }
+        );
+      };
+      
+      animateCards();
+      
+      // Re-animar quando mudar de página
+      return () => {
+        gsap.set('.portfolio-card', { opacity: 0, y: 50 });
+        setTimeout(animateCards, 100);
+      };
+    }, sectionRef);
+    
+    return () => ctx.revert();
+  }, [activeIndex]);
+
   return (
-    <section id="portfolio" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-accent/10">
+    <section ref={sectionRef} id="portfolio" className="py-20 px-4 sm:px-6 lg:px-8 bg-primary gsap-section relative">
+      <div className="circuit-lines"></div>
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16 animate-on-scroll">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            Nosso Portfólio
+        <div className="text-center mb-16 portfolio-title">
+          <h2 className="text-3xl sm:text-4xl font-mono mb-4 text-white">
+            Nosso <span className="neon-text">Portfólio</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-gray-400 max-w-2xl mx-auto">
             Conheça alguns dos projetos que desenvolvemos para nossos clientes
           </p>
         </div>
         
-        <div className="relative">
-          <ScrollArea className="h-[520px] w-full px-4">
-            <div className="grid md:grid-cols-3 gap-8">
-              {visibleProjects.map(project => (
-                <Card key={project.id} className="hover-lift overflow-hidden">
-                  <div className="h-48 overflow-hidden">
-                    <img 
-                      src={project.image} 
-                      alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
-                    />
+        <div ref={cardsRef} className="relative">
+          <div className="grid md:grid-cols-3 gap-8">
+            {visibleProjects.map(project => (
+              <Card key={project.id} className="bg-muted border-gray-800 hover:border-secondary/50 transition-all duration-300 rounded-xl overflow-hidden portfolio-card">
+                <div className="h-48 overflow-hidden">
+                  <img 
+                    src={project.image} 
+                    alt={project.title}
+                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                  />
+                </div>
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-mono mb-2 text-white">{project.title}</h3>
+                  <p className="text-gray-400 text-sm mb-4">{project.description}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tags.map(tag => (
+                      <span key={tag} className="bg-secondary/20 text-secondary text-xs px-2 py-1 rounded-full">
+                        {tag}
+                      </span>
+                    ))}
                   </div>
-                  <CardContent className="p-6">
-                    <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                    <p className="text-muted-foreground mb-4">{project.description}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map(tag => (
-                        <span key={tag} className="bg-accent/30 text-secondary text-xs px-2 py-1 rounded-full">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </ScrollArea>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
           
           <div className="flex justify-center mt-8 gap-4">
             <button 
               onClick={handlePrevClick}
-              className="p-2 rounded-full bg-secondary text-white hover:bg-secondary/80 transition-colors"
+              className="p-2 rounded-full bg-secondary text-primary hover:bg-secondary/80 transition-colors"
               aria-label="Anterior"
             >
               <ArrowLeft size={20} />
@@ -121,7 +159,7 @@ const Portfolio = () => {
                   key={i}
                   onClick={() => setActiveIndex(i)}
                   className={`w-3 h-3 rounded-full transition-colors ${
-                    activeIndex === i ? 'bg-secondary' : 'bg-gray-300'
+                    activeIndex === i ? 'bg-secondary' : 'bg-gray-700'
                   }`}
                   aria-label={`Página ${i + 1}`}
                 />
@@ -129,7 +167,7 @@ const Portfolio = () => {
             </div>
             <button 
               onClick={handleNextClick}
-              className="p-2 rounded-full bg-secondary text-white hover:bg-secondary/80 transition-colors"
+              className="p-2 rounded-full bg-secondary text-primary hover:bg-secondary/80 transition-colors"
               aria-label="Próximo"
             >
               <ArrowRight size={20} />

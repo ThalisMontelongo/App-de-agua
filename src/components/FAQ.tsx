@@ -1,77 +1,110 @@
 
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const faqData = [
   {
-    question: "Quais serviços de desenvolvimento web vocês oferecem?",
-    answer: "Oferecemos uma gama completa de serviços de desenvolvimento web, incluindo criação de sites institucionais, e-commerce, sistemas web personalizados, aplicativos progressivos (PWA), otimização para mecanismos de busca (SEO) e manutenção contínua."
+    question: "Qual é o prazo médio para desenvolvimento de um site?",
+    answer: "O prazo varia de acordo com a complexidade do projeto. Um site institucional simples pode levar de 2 a 4 semanas, enquanto um e-commerce ou sistema web mais complexo pode levar de 2 a 4 meses. Trabalhamos com cronogramas detalhados para que você possa acompanhar cada etapa."
   },
   {
-    question: "Quanto tempo leva para desenvolver um site ou aplicativo?",
-    answer: "O tempo de desenvolvimento varia de acordo com a complexidade do projeto. Um site institucional simples pode levar de 2 a 4 semanas, enquanto um e-commerce ou sistema web mais complexo pode levar de 2 a 6 meses. Durante a fase de planejamento, fornecemos um cronograma detalhado para o seu projeto específico."
+    question: "Vocês oferecem suporte após a entrega do projeto?",
+    answer: "Sim, oferecemos planos de suporte e manutenção mensal que incluem atualizações de segurança, backups regulares, pequenas alterações e monitoramento do desempenho. Nosso objetivo é garantir que seu site permaneça funcional e seguro."
   },
   {
     question: "Como funciona o processo de desenvolvimento?",
-    answer: "Nosso processo segue estas etapas: 1) Briefing e levantamento de requisitos, 2) Planejamento e arquitetura da solução, 3) Design de interface e experiência do usuário, 4) Desenvolvimento e programação, 5) Testes e garantia de qualidade, 6) Lançamento e 7) Suporte contínuo e manutenção."
+    answer: "Nosso processo inclui: 1) Briefing e levantamento de requisitos; 2) Proposta comercial e planejamento; 3) Design e aprovação; 4) Desenvolvimento; 5) Testes e ajustes; 6) Treinamento e entrega. Você acompanha todo o processo através de relatórios regulares."
   },
   {
-    question: "Vocês oferecem manutenção após a conclusão do projeto?",
-    answer: "Sim, oferecemos planos de manutenção mensal que incluem atualizações de segurança, backup regular, pequenas alterações de conteúdo, monitoramento de desempenho e suporte técnico. Também atendemos demandas pontuais de manutenção para clientes que preferem um modelo sob demanda."
+    question: "Quais tecnologias vocês utilizam?",
+    answer: "Trabalhamos com as tecnologias mais modernas do mercado como React, Next.js, Vue.js, Node.js, Python/Django, PHP/Laravel, bancos de dados SQL e NoSQL, além de integrações com diversas APIs e serviços. Selecionamos a stack ideal para cada projeto específico."
   },
   {
     question: "O site será responsivo para dispositivos móveis?",
-    answer: "Sim, todos os nossos projetos são desenvolvidos com design responsivo, garantindo que funcionem perfeitamente em todos os dispositivos: smartphones, tablets, laptops e desktops. Testamos em diversos tamanhos de tela e navegadores para garantir compatibilidade total."
-  },
-  {
-    question: "Posso atualizar o conteúdo do meu site sozinho depois?",
-    answer: "Absolutamente. Desenvolvemos com sistemas de gerenciamento de conteúdo (CMS) que permitem que você edite textos, imagens e outros conteúdos facilmente, sem conhecimento técnico. Também fornecemos treinamento para sua equipe utilizar o painel administrativo."
+    answer: "Sim, todos os nossos projetos são desenvolvidos com design responsivo, garantindo uma experiência consistente e de qualidade em todos os dispositivos: desktops, tablets e smartphones. Testamos em diversos tamanhos de tela e navegadores."
   }
 ];
 
 const FAQ = () => {
-  const [openItems, setOpenItems] = useState<number[]>([]);
+  const sectionRef = useRef<HTMLElement>(null);
+  const accordionRef = useRef<HTMLDivElement>(null);
 
-  const toggleItem = (index: number) => {
-    setOpenItems(prev => 
-      prev.includes(index) 
-        ? prev.filter(i => i !== index) 
-        : [...prev, index]
-    );
-  };
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.faq-title', {
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 80%'
+        }
+      });
+
+      gsap.from('.faq-item', {
+        opacity: 0,
+        y: 30,
+        stagger: 0.1,
+        duration: 0.6,
+        scrollTrigger: {
+          trigger: accordionRef.current,
+          start: 'top 80%'
+        }
+      });
+    }, sectionRef);
+    
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section id="faq" className="py-20 px-4 sm:px-6 lg:px-8 bg-muted">
+    <section ref={sectionRef} id="faq" className="py-20 px-4 sm:px-6 lg:px-8 bg-primary gsap-section relative">
+      <div className="circuit-lines"></div>
       <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-16 animate-on-scroll">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            Perguntas Frequentes
+        <div className="text-center mb-16 faq-title">
+          <h2 className="text-3xl sm:text-4xl font-mono mb-4 text-white">
+            Perguntas <span className="neon-text">Frequentes</span>
           </h2>
-          <p className="text-muted-foreground">
-            Respostas para as dúvidas mais comuns sobre nossos serviços
+          <p className="text-gray-400 max-w-2xl mx-auto">
+            Tire suas dúvidas sobre nossos serviços e processos
           </p>
         </div>
 
-        <div className="space-y-4">
-          {faqData.map((item, index) => (
-            <Collapsible 
-              key={index} 
-              open={openItems.includes(index)} 
-              onOpenChange={() => toggleItem(index)}
-              className="border border-border rounded-lg overflow-hidden"
-            >
-              <CollapsibleTrigger className="flex justify-between items-center w-full p-5 text-left font-medium hover:bg-accent/10 transition-colors">
-                <span>{item.question}</span>
-                <ChevronDown 
-                  className={`h-5 w-5 text-primary transition-transform ${openItems.includes(index) ? 'transform rotate-180' : ''}`} 
-                />
-              </CollapsibleTrigger>
-              <CollapsibleContent className="p-5 pt-0 text-muted-foreground border-t border-border">
-                {item.answer}
-              </CollapsibleContent>
-            </Collapsible>
-          ))}
+        <div ref={accordionRef} className="space-y-4">
+          <Accordion type="single" collapsible className="w-full">
+            {faqData.map((item, index) => (
+              <AccordionItem 
+                key={index} 
+                value={`item-${index}`} 
+                className="faq-item bg-muted border border-gray-800 rounded-lg mb-4 overflow-hidden"
+              >
+                <AccordionTrigger className="px-6 py-4 text-white font-mono hover:text-secondary data-[state=open]:text-secondary">
+                  {item.question}
+                </AccordionTrigger>
+                <AccordionContent className="px-6 pb-4 text-gray-400">
+                  {item.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+
+        <div className="mt-12 text-center">
+          <p className="text-gray-400 mb-4">Ainda tem dúvidas? Entre em contato conosco</p>
+          <a 
+            href="#contact" 
+            className="inline-flex items-center justify-center gap-2 bg-secondary text-primary px-8 py-3 rounded-lg hover:bg-secondary/90 transition-colors"
+          >
+            Fale Conosco
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </a>
         </div>
       </div>
     </section>

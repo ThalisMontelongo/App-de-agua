@@ -1,171 +1,257 @@
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Send, Phone } from 'lucide-react';
+import gsap from 'gsap';
 
 const Contact = () => {
   const [formState, setFormState] = useState({
     name: '',
     email: '',
     phone: '',
-    service: '',
+    subject: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Formulário enviado:', formState);
-    // Adicione aqui a lógica de envio do formulário
-    // Por exemplo, envio para uma API, email, etc.
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormState({
+      ...formState,
+      [e.target.name]: e.target.value
+    });
   };
 
+  const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    // Simulação de envio de formulário
+    setTimeout(() => {
+      console.log('Formulário enviado:', formState);
+      setIsSubmitting(false);
+      setFormState({
+        name: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: ''
+      });
+      alert('Mensagem enviada com sucesso! Entraremos em contato em breve.');
+    }, 1000);
+  };
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.contact-title', {
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 80%'
+        }
+      });
+      
+      gsap.from('.contact-form', {
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        delay: 0.2,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 80%'
+        }
+      });
+      
+      gsap.from('.contact-info', {
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        delay: 0.4,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 80%'
+        }
+      });
+    }, sectionRef);
+    
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-accent/10">
+    <section ref={sectionRef} id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-primary gsap-section relative">
+      <div className="circuit-lines"></div>
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16 animate-on-scroll">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            Entre em Contato
+        <div className="text-center mb-16 contact-title">
+          <h2 className="text-3xl sm:text-4xl font-mono mb-4 text-white">
+            Entre em <span className="neon-text">Contato</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Pronto para começar seu projeto? Entre em contato hoje para uma consulta gratuita
+          <p className="text-gray-400 max-w-2xl mx-auto">
+            Estamos prontos para transformar sua ideia em realidade. Preencha o formulário abaixo para iniciarmos uma conversa.
           </p>
         </div>
-
-        <div className="grid md:grid-cols-2 gap-12 items-start max-w-5xl mx-auto">
-          <div className="bg-white p-6 rounded-xl shadow-md">
-            <form onSubmit={handleSubmit} className="space-y-6 animate-on-scroll">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-primary mb-2">
-                  Nome Completo
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  className="w-full px-4 py-3 rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-secondary transition-all"
-                  value={formState.name}
-                  onChange={(e) => setFormState(prev => ({ ...prev, name: e.target.value }))}
-                  required
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Form */}
+          <div className="contact-form">
+            <form ref={formRef} onSubmit={handleSubmit} className="bg-muted p-6 rounded-xl border border-gray-800">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-primary mb-2">
-                    E-mail
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-400 mb-1">
+                    Nome completo *
                   </label>
                   <input
-                    type="email"
-                    id="email"
-                    className="w-full px-4 py-3 rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-secondary transition-all"
-                    value={formState.email}
-                    onChange={(e) => setFormState(prev => ({ ...prev, email: e.target.value }))}
+                    id="name"
+                    name="name"
+                    type="text"
                     required
+                    value={formState.name}
+                    onChange={handleChange}
+                    className="w-full bg-primary border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-secondary/50"
                   />
                 </div>
-                
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-primary mb-2">
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-400 mb-1">
+                    Email *
+                  </label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    value={formState.email}
+                    onChange={handleChange}
+                    className="w-full bg-primary border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-secondary/50"
+                  />
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-400 mb-1">
                     Telefone
                   </label>
                   <input
-                    type="tel"
                     id="phone"
-                    className="w-full px-4 py-3 rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-secondary transition-all"
+                    name="phone"
+                    type="tel"
                     value={formState.phone}
-                    onChange={(e) => setFormState(prev => ({ ...prev, phone: e.target.value }))}
+                    onChange={handleChange}
+                    className="w-full bg-primary border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-secondary/50"
                   />
                 </div>
+                <div>
+                  <label htmlFor="subject" className="block text-sm font-medium text-gray-400 mb-1">
+                    Assunto *
+                  </label>
+                  <select
+                    id="subject"
+                    name="subject"
+                    required
+                    value={formState.subject}
+                    onChange={handleChange}
+                    className="w-full bg-primary border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-secondary/50"
+                  >
+                    <option value="">Selecione uma opção</option>
+                    <option value="website">Website</option>
+                    <option value="ecommerce">E-commerce</option>
+                    <option value="app">Aplicativo</option>
+                    <option value="system">Sistema Web</option>
+                    <option value="other">Outro</option>
+                  </select>
+                </div>
               </div>
-
-              <div>
-                <label htmlFor="service" className="block text-sm font-medium text-primary mb-2">
-                  Serviço de Interesse
-                </label>
-                <select
-                  id="service"
-                  className="w-full px-4 py-3 rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-secondary transition-all bg-white"
-                  value={formState.service}
-                  onChange={(e) => setFormState(prev => ({ ...prev, service: e.target.value }))}
-                  required
-                >
-                  <option value="">Selecione um serviço</option>
-                  <option value="website">Website</option>
-                  <option value="ecommerce">E-commerce</option>
-                  <option value="webapp">Aplicativo Web</option>
-                  <option value="system">Sistema Web</option>
-                  <option value="maintenance">Manutenção</option>
-                  <option value="other">Outro</option>
-                </select>
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-primary mb-2">
-                  Mensagem
+              
+              <div className="mb-6">
+                <label htmlFor="message" className="block text-sm font-medium text-gray-400 mb-1">
+                  Mensagem *
                 </label>
                 <textarea
                   id="message"
-                  rows={4}
-                  className="w-full px-4 py-3 rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-secondary transition-all"
-                  value={formState.message}
-                  onChange={(e) => setFormState(prev => ({ ...prev, message: e.target.value }))}
+                  name="message"
+                  rows={5}
                   required
-                />
+                  value={formState.message}
+                  onChange={handleChange}
+                  className="w-full bg-primary border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-secondary/50"
+                ></textarea>
               </div>
-
+              
               <button
                 type="submit"
-                className="w-full px-6 py-3 rounded-full bg-secondary text-white hover:bg-secondary/80 transition-all hover-lift inline-flex items-center justify-center"
+                disabled={isSubmitting}
+                className="w-full bg-secondary text-primary px-6 py-3 rounded-lg flex items-center justify-center gap-2 hover:bg-secondary/90 transition-colors disabled:opacity-70"
               >
-                Enviar Mensagem
-                <Send className="ml-2 h-5 w-5" />
+                {isSubmitting ? (
+                  <>
+                    <span className="animate-pulse">Enviando...</span>
+                  </>
+                ) : (
+                  <>
+                    Enviar Mensagem <Send className="w-4 h-4" />
+                  </>
+                )}
               </button>
             </form>
           </div>
-          
-          <div className="space-y-8">
-            <div className="bg-white p-6 rounded-xl shadow-md">
-              <h3 className="text-xl font-bold mb-4">Horário de Atendimento</h3>
-              <ul className="space-y-2">
-                <li className="flex justify-between">
-                  <span>Segunda a Sexta</span>
-                  <span>9:00 - 18:00</span>
-                </li>
-                <li className="flex justify-between">
-                  <span>Sábado</span>
-                  <span>10:00 - 15:00</span>
-                </li>
-                <li className="flex justify-between">
-                  <span>Domingo</span>
-                  <span>Fechado</span>
-                </li>
-              </ul>
+
+          {/* Contact Info */}
+          <div className="contact-info">
+            <div className="bg-muted p-6 rounded-xl border border-gray-800 mb-6">
+              <h3 className="text-xl font-mono mb-4 text-white">Informações de Contato</h3>
+              <div className="space-y-4">
+                <div className="flex items-start gap-4">
+                  <div className="bg-secondary/20 p-2 rounded-full">
+                    <svg className="w-6 h-6 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-400">Email</p>
+                    <a href="mailto:contato@techprogramers.com.br" className="text-white hover:text-secondary transition-colors">
+                      contato@techprogramers.com.br
+                    </a>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-4">
+                  <div className="bg-secondary/20 p-2 rounded-full">
+                    <Phone className="w-6 h-6 text-secondary" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-400">Telefone</p>
+                    <a href="tel:+551199999999" className="text-white hover:text-secondary transition-colors">
+                      +55 (11) 9999-9999
+                    </a>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-4">
+                  <div className="bg-secondary/20 p-2 rounded-full">
+                    <svg className="w-6 h-6 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-400">Endereço</p>
+                    <address className="text-white not-italic">
+                      Av. Paulista, 1000 - Bela Vista<br />
+                      São Paulo - SP, 01310-100
+                    </address>
+                  </div>
+                </div>
+              </div>
             </div>
             
-            <div className="bg-white p-6 rounded-xl shadow-md">
-              <h3 className="text-xl font-bold mb-4">Informações de Contato</h3>
-              <ul className="space-y-4">
-                <li className="flex items-start">
-                  <div className="mr-3 mt-1 text-secondary">
-                    <Send size={18} />
-                  </div>
-                  <div>
-                    <p className="font-medium">E-mail</p>
-                    <a href="mailto:contato@webdevsolutions.com.br" className="text-secondary hover:underline">
-                      contato@webdevsolutions.com.br
-                    </a>
-                  </div>
-                </li>
-                <li className="flex items-start">
-                  <div className="mr-3 mt-1 text-secondary">
-                    <Phone size={18} />
-                  </div>
-                  <div>
-                    <p className="font-medium">Telefone</p>
-                    <a href="tel:+551199998888" className="text-secondary hover:underline">
-                      (11) 9999-8888
-                    </a>
-                  </div>
-                </li>
-              </ul>
+            <div className="bg-muted p-6 rounded-xl border border-gray-800">
+              <h3 className="text-xl font-mono mb-4 text-white">Horário de Atendimento</h3>
+              <div className="space-y-2 text-gray-400">
+                <p>Segunda a Sexta: 9h às 18h</p>
+                <p>Sábado: 9h às 13h</p>
+                <p>Domingo: Fechado</p>
+              </div>
             </div>
           </div>
         </div>

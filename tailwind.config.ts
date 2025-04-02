@@ -26,21 +26,25 @@ export default {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         primary: {
-          DEFAULT: '#2C2C2C',
+          DEFAULT: '#121212',
           foreground: '#FFFFFF',
-          muted: '#404040'
+          muted: '#2A2A2A'
         },
         secondary: {
-          DEFAULT: '#0F61A7', // Azul tecnológico no lugar do marrom
-          foreground: '#FFFFFF'
+          DEFAULT: '#0BFF84', // Verde neon
+          foreground: '#121212'
         },
         accent: {
-          DEFAULT: '#9DCBF0', // Azul claro
-          foreground: '#2C2C2C'
+          DEFAULT: '#0FCCCE', // Azul neon
+          foreground: '#121212'
         },
         muted: {
-          DEFAULT: '#F5F5F5',
-          foreground: '#666666'
+          DEFAULT: '#1E1E1E',
+          foreground: '#AAAAAA'
+        },
+        code: {
+          background: '#1E1E1E',
+          foreground: '#0BFF84'
         }
       },
       borderRadius: {
@@ -78,17 +82,27 @@ export default {
         'slide': {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-100%)' }
+        },
+        'code-typing': {
+          '0%': { width: '0%' },
+          '100%': { width: '100%' }
         }
       },
       animation: {
         'fade-up': 'fade-up 0.5s ease-out',
         'fade-in': 'fade-in 0.3s ease-out',
         'scale-up': 'scale-up 0.3s ease-out',
-        'slide': 'slide 25s linear infinite'
+        'slide': 'slide 25s linear infinite',
+        'code-typing': 'code-typing 3s steps(50, end)'
       },
       fontFamily: {
-        sans: ['Inter', 'SF Pro Display', 'system-ui', 'sans-serif'],
-        display: ['SF Pro Display', 'Inter', 'system-ui', 'sans-serif']
+        mono: ['JetBrains Mono', 'monospace'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['Space Mono', 'monospace']
+      },
+      backgroundImage: {
+        'circuit-pattern': "url('/lovable-uploads/9f8f48f8-2dbf-46c4-98af-4d2c2253e8a6.png')",
+        'grid-pattern': "radial-gradient(#ffffff10 1px, transparent 1px)",
       }
     }
   },
