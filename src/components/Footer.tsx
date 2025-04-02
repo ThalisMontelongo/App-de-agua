@@ -1,5 +1,4 @@
-
-import { Facebook, Instagram, LinkedIn, Twitter, Mail, Phone, MapPin } from 'lucide-react';
+import { Facebook, Instagram, Linkedin, Twitter, Mail, Phone, MapPin } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 
 const Footer = () => {
@@ -22,7 +21,7 @@ const Footer = () => {
                 <Instagram size={20} />
               </a>
               <a href="#" aria-label="LinkedIn" className="text-gray-300 hover:text-white transition-colors">
-                <LinkedIn size={20} />
+                <Linkedin size={20} />
               </a>
               <a href="#" aria-label="Twitter" className="text-gray-300 hover:text-white transition-colors">
                 <Twitter size={20} />

@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Send } from 'lucide-react';
+import { Send, Phone } from 'lucide-react';
 
 const Contact = () => {
   const [formState, setFormState] = useState({
