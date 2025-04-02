@@ -1,3 +1,4 @@
+
 import { useEffect, useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
 
@@ -13,17 +14,17 @@ const Hero = () => {
             <div className="w-6 h-6 bg-gray-100 rounded flex items-center justify-center">
               <span className="text-gray-600 text-sm">⚡</span>
             </div>
-            <span className="text-gray-600">Innovative Developer Solutions</span>
+            <span className="text-gray-600">Professional Web Development Solutions</span>
           </div>
           
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-normal leading-tight mb-6">
-            Leading Developers<br />
-            Creating the Future of<br />
-            Technology
+            Transforming Ideas Into<br />
+            Powerful Web<br />
+            Applications
           </h1>
           
           <p className="text-gray-600 max-w-xl mb-12">
-            At the helm of innovation, our team of leading developers is dedicated to shaping the future of technology through cutting-edge solutions.
+            Expert web development services crafting responsive sites, e-commerce platforms, and custom web applications that drive business growth.
           </p>
 
           {/* Search Section */}
@@ -33,15 +34,15 @@ const Hero = () => {
                 <span className="text-gray-600 text-sm">💡</span>
               </div>
               <div>
-                <h3 className="font-medium">Innovation at the Forefront</h3>
-                <p className="text-sm text-gray-500">Our developers are dedicated to shaping the future of technology.</p>
+                <h3 className="font-medium">Full-Spectrum Web Solutions</h3>
+                <p className="text-sm text-gray-500">From e-commerce to progressive web apps, we build digital experiences that matter.</p>
               </div>
             </div>
             
             <div className="flex gap-4">
               <input
                 type="text"
-                placeholder="Search your technology"
+                placeholder="Search web development services"
                 className="flex-1 bg-gray-50 rounded-xl px-4 py-3 text-sm focus:outline-none"
               />
               <button className="bg-[#4A332D] text-white rounded-xl px-6 py-3 hover:bg-[#5A433D] transition-colors">
@@ -55,8 +56,10 @@ const Hero = () => {
         <div className="grid md:grid-cols-2 gap-6">
           {/* Left Card */}
           <div className="bg-gradient-to-b from-gray-200 to-gray-300 rounded-3xl p-8 aspect-[4/3] flex flex-col justify-end">
+            <h3 className="text-2xl font-medium mb-4">Our Web Development Portfolio</h3>
+            <p className="text-gray-700 mb-6">Explore our collection of websites, e-commerce platforms, and web applications.</p>
             <button className="bg-[#4A332D] text-white rounded-xl px-6 py-3 w-fit hover:bg-[#5A433D] transition-colors">
-              View Our Work
+              View Projects
             </button>
           </div>
 
@@ -66,46 +69,49 @@ const Hero = () => {
             <div className="bg-gray-100 rounded-3xl p-6">
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <span className="inline-block px-4 py-1 bg-white/80 rounded-full text-sm mb-2">Try Free</span>
-                  <h3 className="text-xl font-medium">Developer Excellence Unleashed</h3>
+                  <span className="inline-block px-4 py-1 bg-white/80 rounded-full text-sm mb-2">Service</span>
+                  <h3 className="text-xl font-medium">E-Commerce Development</h3>
                 </div>
                 <span className="text-sm text-gray-500">01</span>
               </div>
               <p className="text-gray-600 text-sm mb-4">
-                In a world where innovation drives success, our team of expert developers stands at the forefront.
+                Custom online stores with seamless payment integration, inventory management, and mobile-responsive design.
               </p>
               <a href="#" className="text-sm text-gray-600 hover:text-gray-900 flex items-center gap-2">
-                See More <ArrowRight className="w-4 h-4" />
+                Learn More <ArrowRight className="w-4 h-4" />
               </a>
             </div>
 
             {/* Bottom Card */}
             <div className="bg-white rounded-3xl p-6 shadow-sm">
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gray-200 rounded-full"></div>
-                  <div>
-                    <h3 className="font-medium">Lyssa Gelyeonna</h3>
-                    <p className="text-sm text-gray-500">Web Developer</p>
-                  </div>
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <span className="inline-block px-4 py-1 bg-gray-100 rounded-full text-sm mb-2">Service</span>
+                  <h3 className="text-xl font-medium">Web Application Development</h3>
                 </div>
-                <ArrowRight className="w-5 h-5 text-gray-400" />
+                <span className="text-sm text-gray-500">02</span>
               </div>
+              <p className="text-gray-600 text-sm mb-4">
+                Robust, scalable web applications with cutting-edge technologies and intuitive user interfaces.
+              </p>
+              <a href="#" className="text-sm text-gray-600 hover:text-gray-900 flex items-center gap-2">
+                Learn More <ArrowRight className="w-4 h-4" />
+              </a>
             </div>
 
             {/* Rating Card */}
             <div className="bg-[#4A332D] text-white rounded-3xl p-6">
               <div className="flex items-center gap-2 mb-4">
                 <span className="text-yellow-400">★</span>
-                <span className="text-2xl font-medium">4,5</span>
+                <span className="text-2xl font-medium">4,9</span>
                 <span className="text-sm text-gray-300">/5</span>
               </div>
-              <h3 className="font-medium mb-4">Explore Our TrustScore & Customer Reviews</h3>
+              <h3 className="font-medium mb-4">Trusted by Businesses Worldwide</h3>
               <div className="flex gap-2">
                 <div className="w-8 h-8 bg-white/20 rounded-full"></div>
                 <div className="w-8 h-8 bg-white/20 rounded-full"></div>
                 <div className="w-8 h-8 bg-white/20 rounded-full"></div>
-                <span className="text-sm flex items-center ml-2">100k+</span>
+                <span className="text-sm flex items-center ml-2">200+ Projects</span>
               </div>
             </div>
           </div>
