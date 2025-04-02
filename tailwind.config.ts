@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -30,11 +31,11 @@ export default {
           muted: '#404040'
         },
         secondary: {
-          DEFAULT: '#8B7355',
+          DEFAULT: '#0F61A7', // Azul tecnológico no lugar do marrom
           foreground: '#FFFFFF'
         },
         accent: {
-          DEFAULT: '#D4C4B7',
+          DEFAULT: '#9DCBF0', // Azul claro
           foreground: '#2C2C2C'
         },
         muted: {
@@ -73,12 +74,17 @@ export default {
           '100%': {
             transform: 'scale(1)'
           }
+        },
+        'slide': {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-100%)' }
         }
       },
       animation: {
         'fade-up': 'fade-up 0.5s ease-out',
         'fade-in': 'fade-in 0.3s ease-out',
-        'scale-up': 'scale-up 0.3s ease-out'
+        'scale-up': 'scale-up 0.3s ease-out',
+        'slide': 'slide 25s linear infinite'
       },
       fontFamily: {
         sans: ['Inter', 'SF Pro Display', 'system-ui', 'sans-serif'],
