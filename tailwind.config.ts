@@ -46,7 +46,7 @@ export default {
           background: '#1E1E1E',
           foreground: '#882496' // Roxo mais claro para destaque
         },
-        // Cores adicionais da paleta mostrada
+        // Cores adicionais da paleta mostrada - definindo com objetos para suportar opacity modifiers
         palette: {
           purple: {
             light: '#882496',  // Roxo claro

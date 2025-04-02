@@ -84,7 +84,7 @@ const ClientsLogos = () => {
       className="py-16 px-4 sm:px-6 lg:px-8 bg-primary relative overflow-hidden border-t border-b border-gray-800"
     >
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0 bg-gradient-to-r from-palette-purple-DEFAULT/30 to-palette-purple-dark/30 z-0"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-palette-purple-light/30 to-palette-purple-dark/30 z-0"></div>
         <div className="circuit-lines"></div>
       </div>
       

@@ -94,7 +94,7 @@
   }
   
   .client-logo {
-    @apply bg-palette-purple-DEFAULT/20 border border-palette-purple-DEFAULT/20 backdrop-blur-md transition-all duration-300 hover:border-palette-purple-DEFAULT/50;
+    @apply bg-black/20 border border-palette-purple-light/20 backdrop-blur-md transition-all duration-300 hover:border-palette-purple-light/50;
     box-shadow: 0 0 15px rgba(136, 36, 150, 0.1);
   }
   
