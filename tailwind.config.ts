@@ -26,17 +26,17 @@ export default {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         primary: {
-          DEFAULT: '#121212',
+          DEFAULT: '#000000', // Preto puro
           foreground: '#FFFFFF',
           muted: '#2A2A2A'
         },
         secondary: {
-          DEFAULT: '#0BFF84', // Verde neon
-          foreground: '#121212'
+          DEFAULT: '#56165E', // Roxo principal
+          foreground: '#FFFFFF'
         },
         accent: {
-          DEFAULT: '#0FCCCE', // Azul neon
-          foreground: '#121212'
+          DEFAULT: '#342A9F', // Azul escuro
+          foreground: '#FFFFFF'
         },
         muted: {
           DEFAULT: '#1E1E1E',
@@ -44,7 +44,15 @@ export default {
         },
         code: {
           background: '#1E1E1E',
-          foreground: '#0BFF84'
+          foreground: '#882496' // Roxo mais claro para destaque
+        },
+        // Cores adicionais da paleta mostrada
+        palette: {
+          purple: {
+            light: '#882496',  // Roxo claro
+            DEFAULT: '#56165E', // Roxo principal
+            dark: '#342A9F'     // Roxo/azul escuro
+          }
         }
       },
       borderRadius: {
@@ -86,14 +94,20 @@ export default {
         'code-typing': {
           '0%': { width: '0%' },
           '100%': { width: '100%' }
+        },
+        'float': {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' }
         }
       },
       animation: {
         'fade-up': 'fade-up 0.5s ease-out',
         'fade-in': 'fade-in 0.3s ease-out',
         'scale-up': 'scale-up 0.3s ease-out',
-        'slide': 'slide 25s linear infinite',
-        'code-typing': 'code-typing 3s steps(50, end)'
+        'slide': 'slide 40s linear infinite',
+        'slide-slow': 'slide 60s linear infinite',
+        'code-typing': 'code-typing 3s steps(50, end)',
+        'float': 'float 6s ease-in-out infinite'
       },
       fontFamily: {
         mono: ['JetBrains Mono', 'monospace'],

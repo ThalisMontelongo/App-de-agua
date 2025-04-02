@@ -1,7 +1,6 @@
 
 import { useState, useEffect, useRef } from 'react';
-import { ArrowRight, ArrowLeft } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
+import { ArrowRight, ArrowLeft, ExternalLink } from 'lucide-react';
 import gsap from 'gsap';
 
 const projects = [
@@ -71,6 +70,7 @@ const Portfolio = () => {
   
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Animação para título
       gsap.from('.portfolio-title', {
         opacity: 0, 
         y: 30,
@@ -88,8 +88,22 @@ const Portfolio = () => {
           { 
             opacity: 1, 
             y: 0,
-            stagger: 0.1,
-            duration: 0.6,
+            stagger: 0.15,
+            duration: 0.8,
+            ease: 'power3.out'
+          }
+        );
+        
+        // Animação para tags
+        gsap.fromTo('.tag-item',
+          { opacity: 0, scale: 0.8 },
+          {
+            opacity: 1,
+            scale: 1,
+            stagger: 0.05,
+            delay: 0.4,
+            duration: 0.4,
+            ease: 'back.out(1.7)'
           }
         );
       };
@@ -98,7 +112,7 @@ const Portfolio = () => {
       
       // Re-animar quando mudar de página
       return () => {
-        gsap.set('.portfolio-card', { opacity: 0, y: 50 });
+        gsap.set(['.portfolio-card', '.tag-item'], { opacity: 0, y: 50 });
         setTimeout(animateCards, 100);
       };
     }, sectionRef);
@@ -108,8 +122,12 @@ const Portfolio = () => {
 
   return (
     <section ref={sectionRef} id="portfolio" className="py-20 px-4 sm:px-6 lg:px-8 bg-primary gsap-section relative">
-      <div className="circuit-lines"></div>
-      <div className="max-w-7xl mx-auto">
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute inset-0 bg-gradient-to-b from-palette-purple-DEFAULT/20 to-palette-purple-dark/30 z-0"></div>
+        <div className="circuit-lines"></div>
+      </div>
+      
+      <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16 portfolio-title">
           <h2 className="text-3xl sm:text-4xl font-mono mb-4 text-white">
             Nosso <span className="neon-text">Portfólio</span>
@@ -121,53 +139,81 @@ const Portfolio = () => {
         
         <div ref={cardsRef} className="relative">
           <div className="grid md:grid-cols-3 gap-8">
-            {visibleProjects.map(project => (
-              <Card key={project.id} className="bg-muted border-gray-800 hover:border-secondary/50 transition-all duration-300 rounded-xl overflow-hidden portfolio-card">
-                <div className="h-48 overflow-hidden">
+            {visibleProjects.map((project, idx) => (
+              <div 
+                key={project.id} 
+                className="portfolio-card rounded-xl overflow-hidden h-[400px]"
+                style={{ animationDelay: `${idx * 0.1}s` }}
+              >
+                <div className="h-full relative">
+                  {/* Imagem de fundo */}
                   <img 
                     src={project.image} 
                     alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                    className="w-full h-full object-cover"
                   />
-                </div>
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-mono mb-2 text-white">{project.title}</h3>
-                  <p className="text-gray-400 text-sm mb-4">{project.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map(tag => (
-                      <span key={tag} className="bg-secondary/20 text-secondary text-xs px-2 py-1 rounded-full">
-                        {tag}
-                      </span>
-                    ))}
+                  
+                  {/* Overlay gradiente */}
+                  <div className="card-overlay"></div>
+                  
+                  {/* Conteúdo do card */}
+                  <div className="card-content absolute bottom-0 left-0 right-0 p-6 text-left">
+                    <h3 className="text-xl font-mono mb-2 text-white">{project.title}</h3>
+                    <p className="text-gray-300 text-sm mb-4">{project.description}</p>
+                    
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.tags.map(tag => (
+                        <span 
+                          key={tag} 
+                          className="tag-item bg-palette-purple-DEFAULT/30 text-palette-purple-light text-xs px-3 py-1 rounded-full border border-palette-purple-DEFAULT/40"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    
+                    <button className="mt-2 text-sm flex items-center gap-2 text-palette-purple-light hover:text-white transition-colors group">
+                      <span>Ver detalhes</span>
+                      <ExternalLink size={14} className="transition-transform group-hover:translate-x-1" />
+                    </button>
                   </div>
-                </CardContent>
-              </Card>
+                  
+                  {/* Efeito de hover com borda brilhante */}
+                  <div className="absolute inset-0 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute inset-0 rounded-xl border border-palette-purple-DEFAULT/50"></div>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
           
-          <div className="flex justify-center mt-8 gap-4">
+          <div className="flex justify-center mt-12 gap-4 items-center">
             <button 
               onClick={handlePrevClick}
-              className="p-2 rounded-full bg-secondary text-primary hover:bg-secondary/80 transition-colors"
+              className="p-3 rounded-full bg-palette-purple-DEFAULT hover:bg-palette-purple-light text-white transition-colors"
               aria-label="Anterior"
             >
               <ArrowLeft size={20} />
             </button>
-            <div className="flex gap-2">
+            
+            <div className="flex gap-3">
               {Array.from({ length: totalPages }).map((_, i) => (
                 <button
                   key={i}
                   onClick={() => setActiveIndex(i)}
-                  className={`w-3 h-3 rounded-full transition-colors ${
-                    activeIndex === i ? 'bg-secondary' : 'bg-gray-700'
+                  className={`w-3 h-3 rounded-full transition-all ${
+                    activeIndex === i 
+                      ? 'bg-palette-purple-light scale-125' 
+                      : 'bg-gray-700 hover:bg-gray-500'
                   }`}
                   aria-label={`Página ${i + 1}`}
                 />
               ))}
             </div>
+            
             <button 
               onClick={handleNextClick}
-              className="p-2 rounded-full bg-secondary text-primary hover:bg-secondary/80 transition-colors"
+              className="p-3 rounded-full bg-palette-purple-DEFAULT hover:bg-palette-purple-light text-white transition-colors"
               aria-label="Próximo"
             >
               <ArrowRight size={20} />
