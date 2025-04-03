@@ -123,13 +123,13 @@ const Portfolio = () => {
   return (
     <section ref={sectionRef} id="portfolio" className="py-20 px-4 sm:px-6 lg:px-8 bg-primary gsap-section relative">
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0 bg-gradient-to-b from-palette-purple-DEFAULT/20 to-palette-purple-dark/30 z-0"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-palette-purple-light/20 to-palette-purple-dark/30 z-0"></div>
         <div className="circuit-lines"></div>
       </div>
       
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16 portfolio-title">
-          <h2 className="text-3xl sm:text-4xl font-mono mb-4 text-white">
+          <h2 className="text-3xl sm:text-4xl font-mono mb-4 title-gradient">
             Nosso <span className="neon-text">Portfólio</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
@@ -155,10 +155,11 @@ const Portfolio = () => {
                   
                   {/* Overlay gradiente */}
                   <div className="card-overlay"></div>
+                  <div className="portfolio-gradient-bg"></div>
                   
                   {/* Conteúdo do card */}
                   <div className="card-content absolute bottom-0 left-0 right-0 p-6 text-left">
-                    <h3 className="text-xl font-mono mb-2 text-white">{project.title}</h3>
+                    <h3 className="text-xl font-mono mb-2 text-white title-gradient">{project.title}</h3>
                     <p className="text-gray-300 text-sm mb-4">{project.description}</p>
                     
                     <div className="flex flex-wrap gap-2 mb-4">
@@ -172,15 +173,17 @@ const Portfolio = () => {
                       ))}
                     </div>
                     
-                    <button className="mt-2 text-sm flex items-center gap-2 text-palette-purple-light hover:text-white transition-colors group">
-                      <span>Ver detalhes</span>
-                      <ExternalLink size={14} className="transition-transform group-hover:translate-x-1" />
+                    <button className="btn-neon px-4 py-2 rounded-lg mt-2">
+                      <span className="flex items-center gap-2">
+                        Ver detalhes
+                        <ExternalLink size={14} />
+                      </span>
                     </button>
                   </div>
                   
                   {/* Efeito de hover com borda brilhante */}
                   <div className="absolute inset-0 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300">
-                    <div className="absolute inset-0 rounded-xl border border-palette-purple-DEFAULT/50"></div>
+                    <div className="absolute inset-0 rounded-xl border border-gradient-to-r from-palette-purple-light to-palette-purple-dark"></div>
                   </div>
                 </div>
               </div>
@@ -190,10 +193,12 @@ const Portfolio = () => {
           <div className="flex justify-center mt-12 gap-4 items-center">
             <button 
               onClick={handlePrevClick}
-              className="p-3 rounded-full bg-palette-purple-DEFAULT hover:bg-palette-purple-light text-white transition-colors"
+              className="btn-neon p-3 rounded-full"
               aria-label="Anterior"
             >
-              <ArrowLeft size={20} />
+              <span>
+                <ArrowLeft size={20} />
+              </span>
             </button>
             
             <div className="flex gap-3">
@@ -213,10 +218,12 @@ const Portfolio = () => {
             
             <button 
               onClick={handleNextClick}
-              className="p-3 rounded-full bg-palette-purple-DEFAULT hover:bg-palette-purple-light text-white transition-colors"
+              className="btn-neon p-3 rounded-full"
               aria-label="Próximo"
             >
-              <ArrowRight size={20} />
+              <span>
+                <ArrowRight size={20} />
+              </span>
             </button>
           </div>
         </div>

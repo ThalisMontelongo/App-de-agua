@@ -67,7 +67,7 @@ const FAQ = () => {
       <div className="circuit-lines"></div>
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-16 faq-title">
-          <h2 className="text-3xl sm:text-4xl font-mono mb-4 text-white">
+          <h2 className="text-3xl sm:text-4xl font-mono mb-4 title-gradient">
             Perguntas <span className="neon-text">Frequentes</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
@@ -81,12 +81,13 @@ const FAQ = () => {
               <AccordionItem 
                 key={index} 
                 value={`item-${index}`} 
-                className="faq-item bg-muted border border-gray-800 rounded-lg mb-4 overflow-hidden"
+                className="faq-item bg-muted border border-gray-800 rounded-lg mb-4 overflow-hidden relative"
               >
-                <AccordionTrigger className="px-6 py-4 text-white font-mono hover:text-secondary data-[state=open]:text-secondary">
+                <div className="portfolio-gradient-bg"></div>
+                <AccordionTrigger className="px-6 py-4 text-white font-mono hover:text-palette-purple-light data-[state=open]:text-palette-purple-light relative z-10">
                   {item.question}
                 </AccordionTrigger>
-                <AccordionContent className="px-6 pb-4 text-gray-400">
+                <AccordionContent className="px-6 pb-4 text-gray-400 relative z-10">
                   {item.answer}
                 </AccordionContent>
               </AccordionItem>
@@ -98,12 +99,14 @@ const FAQ = () => {
           <p className="text-gray-400 mb-4">Ainda tem dúvidas? Entre em contato conosco</p>
           <a 
             href="#contact" 
-            className="inline-flex items-center justify-center gap-2 bg-secondary text-primary px-8 py-3 rounded-lg hover:bg-secondary/90 transition-colors"
+            className="btn-neon px-8 py-3 rounded-lg"
           >
-            Fale Conosco
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+            <span className="flex items-center justify-center gap-2">
+              Fale Conosco
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </span>
           </a>
         </div>
       </div>

@@ -25,7 +25,7 @@
   }
 
   .neon-text {
-    @apply text-palette-purple-light;
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-palette-purple-light via-palette-purple-DEFAULT to-palette-purple-dark;
     text-shadow: 0 0 5px rgba(136, 36, 150, 0.5);
   }
   
@@ -101,5 +101,46 @@
   .client-logo:hover {
     transform: translateY(-5px);
     box-shadow: 0 5px 20px rgba(136, 36, 150, 0.2);
+  }
+
+  /* Novas classes para título com gradiente */
+  .title-gradient {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-palette-purple-light via-white to-palette-purple-dark;
+  }
+  
+  /* Botões com animação neon */
+  .btn-neon {
+    @apply relative text-white font-bold overflow-hidden bg-gradient-to-r from-palette-purple-DEFAULT to-palette-purple-dark transition-all;
+    box-shadow: 0 0 10px rgba(136, 36, 150, 0.5);
+  }
+  
+  .btn-neon::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-palette-purple-light via-palette-purple-DEFAULT to-palette-purple-dark opacity-75;
+    background-size: 200% 200%;
+    animation: neonGlow 3s linear infinite;
+  }
+  
+  .btn-neon span {
+    @apply relative z-10 text-white;
+  }
+  
+  @keyframes neonGlow {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  /* Fundo gradiente para cards de portfólio */
+  .portfolio-gradient-bg {
+    @apply absolute inset-0 -z-10 opacity-30;
+    background: linear-gradient(135deg, rgba(86, 22, 94, 0.4) 0%, rgba(52, 42, 159, 0.4) 100%);
+    filter: blur(10px);
   }
 }
