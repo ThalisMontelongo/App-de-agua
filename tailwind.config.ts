@@ -46,14 +46,11 @@ export default {
           background: '#1E1E1E',
           foreground: '#882496' // Roxo mais claro para destaque
         },
-        // Cores adicionais da paleta mostrada - definindo com objetos para suportar opacity modifiers
-        palette: {
-          purple: {
-            light: '#882496',  // Roxo claro
-            DEFAULT: '#56165E', // Roxo principal
-            dark: '#342A9F'     // Roxo/azul escuro
-          }
-        }
+        // Flatting the palette structure to work with gradient modifiers
+        'palette-purple-light': '#882496',
+        'palette-purple-DEFAULT': '#56165E',
+        'palette-purple': '#56165E', // Default value without the -DEFAULT suffix
+        'palette-purple-dark': '#342A9F'
       },
       borderRadius: {
         lg: 'var(--radius)',
